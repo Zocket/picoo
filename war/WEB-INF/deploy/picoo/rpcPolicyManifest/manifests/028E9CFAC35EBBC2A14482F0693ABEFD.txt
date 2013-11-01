@@ -1,2 +1,0 @@
-serviceClass: com.picoo.services.client.GreetingService
-path: 557FEF50BE9441B2EF72A9A7D0AC0C3D.gwt.rpc
