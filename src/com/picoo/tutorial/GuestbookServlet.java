@@ -9,6 +9,11 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
 public class GuestbookServlet extends HttpServlet{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7620657004606627844L;
+
 	@Override
 	public void doGet(HttpServletRequest req,HttpServletResponse resp)
 	throws IOException{
