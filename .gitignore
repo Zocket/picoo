@@ -2,6 +2,6 @@
 gwt-unitCache/*
 test/*
 test-classes/*
-war/WEB-INF/classes/*
+war/WEB-INF/classes/**
 
 *.class
