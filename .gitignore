@@ -1,7 +1,6 @@
-.gwt/*
-gwt-unitCache/*
-test/*
-test-classes/*
-war/WEB-INF/classes/**
+.gwt/
+gwt-unitCache/
+test/
+test-classes/
+war/WEB-INF/classes/
 
-*.class
