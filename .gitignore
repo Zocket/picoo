@@ -1,0 +1,6 @@
+.gwt/*
+gwt-unitCacnhe/*
+test/*
+test-classes/*
+
+*.class
