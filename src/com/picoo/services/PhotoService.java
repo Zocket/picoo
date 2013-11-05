@@ -18,18 +18,21 @@ public class PhotoService extends HttpServlet {
 	public void init(ServletConfig sc) throws ServletException {
 	    super.init(sc);
 	    psh=new PhotoServiceHelper(sc.getServletContext().getInitParameter("flickr_rest_url"),
-	    		sc.getServletContext().getInitParameter("flickr_api_key"));
+	    		sc.getServletContext().getInitParameter("flickr_api_key"),
+	    		sc.getServletContext().getInitParameter("flickr_service_protocol"));
 	  }
 	@Override
 	public void doGet(HttpServletRequest req,HttpServletResponse resp)
-	throws IOException{		
-		resp.getWriter().println(retrieveFlickrPhotos(
+	throws IOException{	
+		StringBuilder sb=retrieveFlickrPhotos(
 				new Date(Long.parseLong(req.getParameter("fromTime"))),
-				new Date(Long.parseLong(req.getParameter("toTime")))));
+				new Date(Long.parseLong(req.getParameter("toTime"))));
+		resp.getWriter().println(sb);
+		
 	}
 	
 	
-	public StringBuffer retrieveFlickrPhotos(Date fromTime, Date toTime) throws IOException{
+	public StringBuilder retrieveFlickrPhotos(Date fromTime, Date toTime) throws IOException{
 		long fromtimesec=fromTime.getTime()/1000;
 		long totimesec=toTime.getTime()/1000;
 		//extras=date_upload>1383316118,date_upload<1383316823
@@ -37,7 +40,7 @@ public class PhotoService extends HttpServlet {
 		String mString="method=flickr.photos.getRecent";
 		String qString="extras=date_upload>="+fromtimesec+",date_upload<"+totimesec;
 		
-		StringBuffer resp=psh.doGet(mString, qString);
+		StringBuilder resp=psh.flickrGet(mString, qString);
 		logger.info(resp.toString());
 		return resp;
 	}

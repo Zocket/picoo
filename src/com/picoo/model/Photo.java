@@ -8,18 +8,17 @@ public class Photo {
 	private Date uploadDate;
 	private Date takenDate;
 	private String geoInfo;
-	public String getGeoInfo() {
-		return geoInfo;
-	}
-	public void setGeoInfo(String geoInfo) {
-		this.geoInfo = geoInfo;
-	}
 	private Owner owner;
-	private String genre;
 	private String url;
-	private boolean isPublic;
-	private boolean isFriend;
-	private boolean isFamily;
+	private String[] tags;
+	public String[] getTags() {
+		return tags;
+	}
+	public void setTags(String[] tags) {
+		this.tags = tags;
+	}
+	
+	
 	public String getTitle() {
 		return title;
 	}
@@ -50,35 +49,17 @@ public class Photo {
 	public void setOwner(Owner owner) {
 		this.owner = owner;
 	}
-	public String getGenre() {
-		return genre;
-	}
-	public void setGenre(String genre) {
-		this.genre = genre;
-	}
+
 	public String getUrl() {
 		return url;
 	}
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public boolean isPublic() {
-		return isPublic;
+	public String getGeoInfo() {
+		return geoInfo;
 	}
-	public void setPublic(boolean isPublic) {
-		this.isPublic = isPublic;
+	public void setGeoInfo(String geoInfo) {
+		this.geoInfo = geoInfo;
 	}
-	public boolean isFriend() {
-		return isFriend;
-	}
-	public void setFriend(boolean isFriend) {
-		this.isFriend = isFriend;
-	}
-	public boolean isFamily() {
-		return isFamily;
-	}
-	public void setFamily(boolean isFamily) {
-		this.isFamily = isFamily;
-	}
-	
 }
