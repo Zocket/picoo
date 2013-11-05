@@ -1,6 +1,10 @@
 package com.picoo.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.picoo.flickr.FlickrPhoto;
+import com.picoo.flickr.FlickrPhotoList;
 
 public class EntityConverter {
 	public static Photo convertFPToPhoto(FlickrPhoto fp) {
@@ -22,5 +26,19 @@ public class EntityConverter {
 		 fp.getServer()+"/"+
 		 fp.getId()+"_"+fp.getSecret()+".jpg");
 		return p;
+	}
+	
+	public static List<Photo> convertFPSToPhotos(FlickrPhotoList fps) {
+		List<Photo> ps=new ArrayList<Photo>();
+		for (FlickrPhoto fp: fps.getPhotos()){
+			ps.add(convertFPToPhoto(fp));
+		}
+		return ps;
+	}
+	
+	public static PhotoList convertFPSToPL(FlickrPhotoList fps) {
+		PhotoList pl=new PhotoList();
+		pl.setPhotos(convertFPSToPhotos(fps));
+		return pl;
 	}
 }
