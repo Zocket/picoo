@@ -15,7 +15,9 @@ public class PhotoService extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 5783312361170990980L;
+	private static final String FLICKRRECENT="flickr.photos.getRecent";
 	private PhotoServiceHelper psh;
+	@SuppressWarnings("unused")
 	private static final Logger logger=Logger.getLogger(PhotoService.class.getName());
 	public void init(ServletConfig sc) throws ServletException {
 	    super.init(sc);
@@ -38,7 +40,9 @@ public class PhotoService extends HttpServlet {
 	}
 	
 	
-	public StringBuilder retrieveFlickrPhotos(Date fromTime, Date toTime) throws IOException{
+/*	POC method which won't be used any more.
+ * 
+ * public StringBuilder retrieveFlickrPhotos(Date fromTime, Date toTime) throws IOException{
 		long fromtimesec=fromTime.getTime()/1000;
 		long totimesec=toTime.getTime()/1000;
 		//extras=date_upload>1383316118,date_upload<1383316823
@@ -49,17 +53,19 @@ public class PhotoService extends HttpServlet {
 		StringBuilder resp=psh.flickrGet(mString, qString);
 		logger.info(resp.toString());
 		return resp;
-	}
+	}*/
 	
 	public String retrieveJsonFlickrPhotos(Date fromTime, Date toTime) throws IOException{
 		long fromtimesec=fromTime.getTime()/1000;
 		long totimesec=toTime.getTime()/1000;
 		//extras=date_upload>1383316118,date_upload<1383316823
 		//method=flickr.photos.getRecent
-		String mString="method=flickr.photos.getRecent";
+		String mString="method="+FLICKRRECENT;
 		String qString="extras=date_upload>="+fromtimesec+",date_upload<"+totimesec;
-		
-		return psh.getJsonPhotosFlickr(psh.transform(psh.getFlickrJsonStream(mString, qString),FlickrPhotoList.class));
-	}
+		FlickrPhotoList fpl=psh.getJsonFlickrPhotos(mString, qString);
+		//return psh.getJsonPhotosFlickr(psh.transform(psh.getJsonFlickrStream(mString, qString),FlickrPhotoList.class));
+		return psh.getJsonPhotoList(fpl);
+	}	
+	
 	
 }
