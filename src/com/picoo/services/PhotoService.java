@@ -1,6 +1,10 @@
 package com.picoo.services;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -16,6 +20,8 @@ public class PhotoService extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 5783312361170990980L;
 	private static final String FLICKRRECENT="flickr.photos.getRecent";
+	private static final String FLICKRPOPULAR="flickr.stats.getPopularPhotos";
+
 	private PhotoServiceHelper psh;
 	@SuppressWarnings("unused")
 	private static final Logger logger=Logger.getLogger(PhotoService.class.getName());
@@ -29,13 +35,14 @@ public class PhotoService extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest req,HttpServletResponse resp)
 	throws IOException{	
-		/*StringBuilder sb=retrieveFlickrPhotos(
-				new Date(Long.parseLong(req.getParameter("fromTime"))),
-				new Date(Long.parseLong(req.getParameter("toTime"))));
-		resp.getWriter().println(sb);*/
-		resp.getWriter().println(retrieveJsonFlickrPhotos(
-				new Date(Long.parseLong(req.getParameter("fromTime"))),
-				new Date(Long.parseLong(req.getParameter("toTime")))));
+		Calendar cal=Calendar.getInstance();
+		long totimestamp=cal.getTimeInMillis();
+		cal.add(Calendar.MONTH, -6);
+		long fromtimestamp=cal.getTimeInMillis();
+			
+		PrintWriter respWriter=resp.getWriter();
+		respWriter.println(retrieveFlickrRecent(new Date(fromtimestamp),
+				new Date(totimestamp)));
 		
 	}
 	
@@ -55,7 +62,17 @@ public class PhotoService extends HttpServlet {
 		return resp;
 	}*/
 	
-	public String retrieveJsonFlickrPhotos(Date fromTime, Date toTime) throws IOException{
+	// this method can only be called by authenticated users.
+	@SuppressWarnings("unused")
+	private String retrieveFlickrPopular() throws UnsupportedEncodingException, MalformedURLException, IOException {
+		// TODO Auto-generated method stub
+		String mString="method="+FLICKRPOPULAR;
+		String qString="";
+		FlickrPhotoList fpl=psh.getJsonFlickrPhotos(mString, qString);
+		return psh.getJsonPhotoList(fpl);
+	}
+	
+	public String retrieveFlickrRecent(Date fromTime, Date toTime) throws IOException{
 		long fromtimesec=fromTime.getTime()/1000;
 		long totimesec=toTime.getTime()/1000;
 		//extras=date_upload>1383316118,date_upload<1383316823

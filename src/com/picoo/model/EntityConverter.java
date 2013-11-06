@@ -24,7 +24,7 @@ public class EntityConverter {
 		 */
 		p.setUrl("http://farm"+fp.getFarm()+".staticflickr.com/"+
 		 fp.getServer()+"/"+
-		 fp.getId()+"_"+fp.getSecret()+".jpg");
+		 fp.getId()+"_"+fp.getSecret()+"_b.jpg");
 		return p;
 	}
 	
