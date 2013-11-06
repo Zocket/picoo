@@ -1,5 +1,6 @@
 package com.picoo.services;
 
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -131,11 +132,7 @@ public class PhotoServiceHelper {
 	}
 
 	public <T> T transform(InputStreamReader is, Class<T> type, String nodeName) {
-		/*
-		 * JsonElement
-		 * je=jp.parse(sb.toString()).getAsJsonObject().get(nodeName); T
-		 * t=gson.fromJson(je, type);
-		 */
+			 
 		T t = null;
 		//BufferedReader in = null;
 		JsonReader jr=new JsonReader(is);
@@ -157,6 +154,46 @@ public class PhotoServiceHelper {
 		
 		return t;
 	}
+	
+	/* Use this method to debug the message received by GAE app from flickr.
+	 * It seems flickr directs requests to "community guidelines" from time to time if the requestor is from GAE.
+	 * If deployed locally, this problem won't occur.
+	public <T> T transform(InputStreamReader is, Class<T> type, String nodeName) {
+		
+		T t = null;
+		JsonReader jr=null;
+		BufferedReader in = null;		
+		in = new BufferedReader(is); 
+		String inputLine; 
+		StringBuilder response = new StringBuilder();
+		try{
+			while ((inputLine = in.readLine()) != null) { 
+				response.append(inputLine);
+					 } 
+			in.close();
+			logger.info(response.toString());
+		
+			InputStream stream = new ByteArrayInputStream(response.toString().getBytes("UTF-8"));
+			jr=new JsonReader(new InputStreamReader(stream));
+			jr.setLenient(true);		
+			//in = new BufferedReader(is);			
+			//JsonElement je = jp.parse(in).getAsJsonObject().get(nodeName);
+			JsonElement je=jp.parse(jr).getAsJsonObject().get(nodeName);
+			t = gson.fromJson(je, type);
+			//in.close();
+		}catch (IOException e){
+			e.printStackTrace();
+		} finally{
+			try {
+				jr.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return t;
+	}*/
 
 	public <T> T transform(InputStreamReader is, Class<T> type)
 			throws IOException {
