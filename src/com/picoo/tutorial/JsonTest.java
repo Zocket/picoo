@@ -1,6 +1,6 @@
 package com.picoo.tutorial;
-import com.picoo.flickr.FlickrPhoto;
-import com.picoo.flickr.FlickrPhotoList;
+import com.picoo.model.flickr.FlickrPhoto;
+import com.picoo.model.flickr.FlickrPhotoList;
 import com.google.gson.*;
 
 public class JsonTest {

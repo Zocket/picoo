@@ -3,8 +3,8 @@ package com.picoo.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.picoo.flickr.FlickrPhoto;
-import com.picoo.flickr.FlickrPhotoList;
+import com.picoo.model.flickr.FlickrPhoto;
+import com.picoo.model.flickr.FlickrPhotoList;
 
 public class EntityConverter {
 	public static Photo convertFPToPhoto(FlickrPhoto fp) {

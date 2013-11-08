@@ -12,8 +12,8 @@ import java.util.logging.Logger;
 
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
-import com.picoo.flickr.FlickrPhotoList;
 import com.picoo.model.EntityConverter;
+import com.picoo.model.flickr.FlickrPhotoList;
 
 public class PhotoServiceHelper {
 	private String url;
