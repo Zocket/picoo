@@ -1,5 +1,7 @@
 package com.picoo.model.itfc;
 
-public interface PhotoList {
+
+public abstract class PhotoList {
+
 
 }

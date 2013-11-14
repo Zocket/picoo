@@ -1,9 +1,11 @@
 package com.picoo.model.flickr;
 
 import java.util.List;
-import com.google.gson.annotations.*;
 
-public class FlickrPhotoList {
+import com.google.gson.annotations.*;
+import com.picoo.model.itfc.PhotoList;
+
+public class FlickrPhotoList extends PhotoList {
 	private int page;
 	private int pages;
 	private int perpage;

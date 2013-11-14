@@ -2,11 +2,10 @@ package com.picoo.model;
 
 import java.util.Date;
 
-public class Photo {
-	private String title;
-	private String description;
+import com.picoo.model.itfc.Photo;
+
+public class PicooPhoto extends Photo{
 	private Date uploadDate;
-	private Date takenDate;
 	private String geoInfo;
 	private Owner owner;
 	private String url;
@@ -16,33 +15,15 @@ public class Photo {
 	}
 	public void setTags(String[] tags) {
 		this.tags = tags;
-	}
-	
-	
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
+	}	
+
 	public Date getUploadDate() {
 		return uploadDate;
 	}
 	public void setUploadDate(Date uploadDate) {
 		this.uploadDate = uploadDate;
 	}
-	public Date getTakenDate() {
-		return takenDate;
-	}
-	public void setTakenDate(Date takenDate) {
-		this.takenDate = takenDate;
-	}
+
 	public Owner getOwner() {
 		return owner;
 	}

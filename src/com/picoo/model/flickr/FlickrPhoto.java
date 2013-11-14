@@ -1,22 +1,19 @@
 package com.picoo.model.flickr;
 
-public class FlickrPhoto {
-	private String id;
+import com.picoo.model.itfc.Photo;
+
+public class FlickrPhoto extends Photo{
+
 	private String owner;
 	private String secret;
 	private String server;
-	private String description;
+
 	private int farm;
-	private String title;
+
 	private int ispublic;
 	private int isfriend;
 	private int isfamily;
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
+
 	public String getOwner() {
 		return owner;
 	}
@@ -35,24 +32,14 @@ public class FlickrPhoto {
 	public void setServer(String server) {
 		this.server = server;
 	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
+
 	public int getFarm() {
 		return farm;
 	}
 	public void setFarm(int farm) {
 		this.farm = farm;
 	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
+
 	public int getIspublic() {
 		return ispublic;
 	}
