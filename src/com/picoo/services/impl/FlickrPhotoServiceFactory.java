@@ -1,6 +1,8 @@
 package com.picoo.services.impl;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -18,6 +20,7 @@ public class FlickrPhotoServiceFactory extends PhotoServiceFactory {
 	static String rootNodeName;
 	static String protocol;
 	static String urlString;
+	static Map<String,String> paramMap;
 	@SuppressWarnings("unused")
 	private static final Logger logger=Logger.getLogger(FlickrPhotoServiceFactory.class.getName());
 	static {
@@ -32,6 +35,15 @@ public class FlickrPhotoServiceFactory extends PhotoServiceFactory {
     		rootNodeName=props.getProperty(rootNodeProperty);
     		protocol=props.getProperty(protocolProperty);
     		urlString=serviceUrl+"&"+protocol+"&api_key=" + apiKey;
+    		paramMap=new HashMap<String,String>();
+    		String k;
+    		int pflen="flickr".length()+1;
+    		for (Object ko : props.keySet()){
+    			k=(String)ko;
+    			if (k.startsWith("flickr.method")||k.startsWith("flickr.param")){
+    				paramMap.put(k.substring(pflen), props.getProperty(k));
+    			}
+    		}
     		
     		/*logger.info("Service Url: "+serviceUrl);
     		logger.info("API key: "+apiKey);
@@ -46,13 +58,30 @@ public class FlickrPhotoServiceFactory extends PhotoServiceFactory {
 	@Override
 	public FlickrPhotoService getPhotoService() {
 		// TODO Auto-generated method stub
-		return new FlickrPhotoService(urlString,rootNodeName);
+		return new FlickrPhotoService();
 	}
 
 	@Override
 	public AuthService getAuthService() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public static String getRootNodeName() {
+		// TODO Auto-generated method stub
+		return rootNodeName;
+	}
+
+
+	public static String getBaseUrl() {
+		// TODO Auto-generated method stub
+		return urlString;
+	}
+
+
+	public static Map<String, String> getParamMap() {
+		// TODO Auto-generated method stub
+		return paramMap;
 	}
 
 

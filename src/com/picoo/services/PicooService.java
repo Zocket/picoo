@@ -55,7 +55,7 @@ public class PicooService extends HttpServlet {
 		long totimestamp=cal.getTimeInMillis();
 		cal.add(Calendar.MONTH, -6);
 		long fromtimestamp=cal.getTimeInMillis();*/	
-		
+		resp.setContentType("application/json");
 		PrintWriter respWriter=resp.getWriter();
 		PhotoService ps=fpsf.getPhotoService();
 		respWriter.println(ps.getPicooPhotoListFromService(req).toString());		

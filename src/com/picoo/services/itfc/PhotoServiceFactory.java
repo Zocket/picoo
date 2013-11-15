@@ -35,4 +35,7 @@ public abstract class PhotoServiceFactory {
 
 	public abstract PhotoService getPhotoService();
 	public abstract AuthService getAuthService();
+	/*public abstract String getRootNodeName();
+	public abstract String getBaseUrl();
+	public abstract Map<String,String> getParamMap();*/
 }
