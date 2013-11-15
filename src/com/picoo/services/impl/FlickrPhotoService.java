@@ -1,11 +1,16 @@
 package com.picoo.services.impl;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.fluent.Request;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -22,12 +27,14 @@ public class FlickrPhotoService implements PhotoService {
 	private String requestMethod;
 	private static final String DEFAULTMETHOD = "flickr.photos.getRecent";
 	private static final int DEFAULTPAGESIZE = 50;
-	private ServiceHandler sh;
+	// it's not used any more
+	//private ServiceHandler sh;
 	private JsonParser jp;
 	private Gson gson;
 
 	public FlickrPhotoService() {
-		sh = new ServiceHandler();
+		//Not used any more.
+		//sh = new ServiceHandler();
 		jp = new JsonParser();
 		gson = new Gson();
 		pageSize = DEFAULTPAGESIZE;
@@ -35,7 +42,7 @@ public class FlickrPhotoService implements PhotoService {
 	}
 
 	@Override
-	public InputStreamReader getStreamFromService(HttpServletRequest req) {
+	public InputStream getStreamFromService(HttpServletRequest req) {
 		// TODO Auto-generated method stub
 		// retrieve all parameters from http request
 		/*
@@ -90,12 +97,32 @@ public class FlickrPhotoService implements PhotoService {
 			e.printStackTrace();
 		}*/
 		url+=urlsuffix;
+		InputStream is=null;
+		try {
+			is=Request.Get(url)
+			.connectTimeout(1000)
+			.socketTimeout(1000)
+			.execute().returnContent().asStream();
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		return sh.invokeGet(url);
+		return is;
 	}
 
 	@Override
-	public FlickrPhotoList getPhotoListFromStream(InputStreamReader isr) {
+	public FlickrPhotoList getPhotoListFromStream(InputStream is){
+		InputStreamReader isr=null;
+		try {
+			isr = new InputStreamReader(is,"UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		JsonReader jr = new JsonReader(isr);
 		FlickrPhotoList fpl = null;
 		try {
@@ -114,6 +141,26 @@ public class FlickrPhotoService implements PhotoService {
 		}
 		return fpl;
 	}
+	
+	/*public FlickrPhotoList getPhotoListFromStream(InputStreamReader isr) {
+		JsonReader jr = new JsonReader(isr);
+		FlickrPhotoList fpl = null;
+		try {
+			jr.setLenient(true);
+			JsonElement je = jp.parse(jr).getAsJsonObject()
+					.get(FlickrPhotoServiceFactory.getRootNodeName());
+			fpl = gson.fromJson(je, FlickrPhotoList.class);
+			// in.close();
+		} finally {
+			try {
+				jr.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return fpl;
+	}*/
 
 	@Override
 	public PicooPhotoList getPicooPhotoList(PhotoList pl) {
@@ -125,8 +172,8 @@ public class FlickrPhotoService implements PhotoService {
 	@Override
 	public PicooPhotoList getPicooPhotoListFromService(HttpServletRequest req) {
 		// TODO Auto-generated method stub
-		InputStreamReader isr = this.getStreamFromService(req);
-		FlickrPhotoList fpl = this.getPhotoListFromStream(isr);
+		InputStream is = this.getStreamFromService(req);
+		FlickrPhotoList fpl = this.getPhotoListFromStream(is);
 		PicooPhotoList ppl = this.getPicooPhotoList(fpl);
 		return ppl;
 	}

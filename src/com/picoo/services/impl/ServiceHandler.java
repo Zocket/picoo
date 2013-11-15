@@ -8,7 +8,10 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.logging.Logger;
 
-
+/*
+ * This is the http client only used as part of POC.
+ * The final solution is to use Apache http client 4.3.1 instead.
+ */
 public class ServiceHandler {
 	private String url;
 	private static final Logger logger = Logger
